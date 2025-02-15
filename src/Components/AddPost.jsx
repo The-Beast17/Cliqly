@@ -43,7 +43,7 @@ const AddPost = () => {
 
       if(imgUrl){   
          dispatch(addPost(data));
-         navigate("/Profile");
+         navigate(`/Profile/${loginUserId}`);
       }
      
   }
