@@ -2,11 +2,17 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Loader from './Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from './store/Reducers/AllusersSlice';
+
 
 const AddPost = () => {
+  const dispatch = useDispatch()
   const [fileName, setFileName] = useState("No file chosen");
   const [imgUrl, setimgUrl] = useState("");
   const [caption, setcaption] = useState("");
+  const {loginUserId } = useSelector(state=>state.myProfileData)
+  console.log(loginUserId )
   
   const navigate = useNavigate();
 
@@ -28,15 +34,15 @@ const AddPost = () => {
 
     const data = {
       postId : nanoid(),
-      userId : "",
+      user_id : loginUserId,
       imageUrl : imgUrl,
       caption : caption,
       likes : 0,
       comments : [],
     }
 
-
-      if(imgUrl){
+      if(imgUrl){   
+         dispatch(addPost(data));
          navigate("/Profile");
       }
      

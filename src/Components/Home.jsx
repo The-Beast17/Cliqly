@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import Comments from './Comments'
+import { useSelector } from 'react-redux';
+
 
 const Home = () => {
-  const posts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0]
+  const [selectedPost, setselectedPost] = useState(null)
+  const allUsers = useSelector((state)=> state.allUsers.users);
+   const {loginUserId} = useSelector((state)=> state.myProfileData);
+
+  const data = allUsers.find((user) => user.user_id === loginUserId);
+  
+  const posts = allUsers.reduce((acc, user) => {
+    if (data.following.includes(user.user_id)) {
+      return acc.concat(user.posts); // ✅ Yeh ab sahi tarike se acc ko update karega
+    }
+    return acc; // ✅ Agar user followed nahi hai, toh acc ko return karo
+  }, []);
+
   return (
     <>
       <div className='w-[80%] h-screen absolute right-0  bg-zinc-900 flex '>
@@ -20,13 +34,14 @@ const Home = () => {
           </div>
 
           {posts.map((ele, i) => {
-            return <div key={i}> <Post /> </div>
+            return <div key={i}> <Post post={ele} onCommentClick={setselectedPost}/> </div>
           })}
         </div>
-        <Comments />
+        <Comments post={selectedPost} />
       </div>
     </>
   )
+
 }
 
 export default Home
