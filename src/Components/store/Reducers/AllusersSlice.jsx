@@ -4,11 +4,10 @@ import { users } from "../../../fakedata";
 
 
 const initialState = {
-    users : JSON.parse(localStorage.getItem("allUsers")) || [],
+    users : JSON.parse(localStorage.getItem("allUsers")) || users,
     likedPost : JSON.parse(localStorage.getItem("LikedPost")) || [],
     LoginUserId : "vishal_chouhan07",
 }
-
 
 const  AllusersSlice = createSlice({
     name: "AllUsers",
