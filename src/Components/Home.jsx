@@ -85,7 +85,7 @@ const Home = () => {
 
         {/* Comments Sidebar */}
         {selectedPost && (
-          <Comments post={selectedPost} isOpen={isCommentOpen} closeComments={closeComments} />
+          <Comments post={selectedPost} isCommentsOpen={isCommentOpen} closeComments={closeComments} />
         )}
       </div>
     </>
