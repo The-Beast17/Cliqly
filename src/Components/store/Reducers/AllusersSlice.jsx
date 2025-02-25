@@ -1,6 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { users } from "../../../fakedata";
+import EditProfile from "../../EditProfile";
 
 
 const initialState = {
@@ -15,11 +16,20 @@ const  AllusersSlice = createSlice({
     reducers: {
         addPost : (state , action)=>{
             const post = action.payload; // Payload se user_id aur post extract karo 
-            const userIndex = state.users.findIndex(user => user.user_id === post.user_id);
+            const userIndex = state.users.findIndex(user => user.user_id === post.profile_id);
             if (userIndex !== -1) {
                 // User ke posts array me naya post add karo
                 state.users[userIndex].posts.push(post);
             }
+            //  localStorage.setItem("LikedPost" , JSON.stringify(state.likedPost))  
+            //  localStorage.setItem("allUsers" , JSON.stringify(state.users))     
+        },
+
+        editProfile : (state , action)=>{
+            const userIndex = state.users.findIndex(user => user.user_id === state.LoginUserId);
+            state.users[userIndex] = action.payload;
+            state.LoginUserId = state.users[userIndex].user_id;
+            console.log(state.LoginUserId)
         },
 
         likeIncrement :(state , action)=>{
@@ -30,8 +40,8 @@ const  AllusersSlice = createSlice({
             if (!state.likedPost.includes(postId)) { 
                     state.likedPost = [...state.likedPost, postId]; 
              }
-             localStorage.setItem("LikedPost" , JSON.stringify(state.likedPost))  
-             localStorage.setItem("allUsers" , JSON.stringify(state.users))              
+            //  localStorage.setItem("LikedPost" , JSON.stringify(state.likedPost))  
+            //  localStorage.setItem("allUsers" , JSON.stringify(state.users))              
         },
         likeDecrement :(state , action)=>{
             const [postId , profile_id] = action.payload;
@@ -43,8 +53,8 @@ const  AllusersSlice = createSlice({
                     state.likedPost = state.likedPost.filter(p => p !== postId);
                 }
             }
-            localStorage.setItem("LikedPost" , JSON.stringify(state.likedPost));
-            localStorage.setItem("allUsers" , JSON.stringify(state.users));
+            // localStorage.setItem("LikedPost" , JSON.stringify(state.likedPost));
+            // localStorage.setItem("allUsers" , JSON.stringify(state.users));
         },
 
         addComment : (state , action)=>{
@@ -52,7 +62,7 @@ const  AllusersSlice = createSlice({
           const userIndex = state.users.findIndex(u => u.user_id === profile_id);
           const postIndex = state.users[userIndex].posts.findIndex(p => p.postId === postId);
           state.users[userIndex].posts[postIndex].comments.push({ user_id: state.LoginUserId, comment: comments})
-          localStorage.setItem("allUsers" , JSON.stringify(state.users));
+        //   localStorage.setItem("allUsers" , JSON.stringify(state.users));
         },
 
         follow : (state , action)=>{
@@ -63,8 +73,7 @@ const  AllusersSlice = createSlice({
             //user ki follow list update krna hai
             const userIndex = state.users.findIndex(u => u.user_id === userId);
             state.users[userIndex].followers.push(state.LoginUserId);
-
-            localStorage.setItem("allUsers" , JSON.stringify(state.users));
+            // localStorage.setItem("allUsers" , JSON.stringify(state.users));
         },
         unfollow : (state , action)=>{
             const userId = action.payload;
@@ -75,10 +84,10 @@ const  AllusersSlice = createSlice({
             const userIndex = state.users.findIndex(u => u.user_id === userId);
             state.users[userIndex].followers =  state.users[userIndex].followers.filter(u=> u !== state.LoginUserId);
 
-            localStorage.setItem("allUsers" , JSON.stringify(state.users));
+            // localStorage.setItem("allUsers" , JSON.stringify(state.users));
         },
     },
 })
 
-export const {addPost , likeIncrement , likeDecrement , addComment , follow , unfollow} = AllusersSlice.actions;
+export const {addPost ,editProfile, likeIncrement , likeDecrement , addComment , follow , unfollow } = AllusersSlice.actions;
 export default AllusersSlice.reducer;

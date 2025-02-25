@@ -16,8 +16,8 @@ export const users =
                     caption: "Enjoying the sunset 🌅",
                     likes: 12,
                     comments: [
-                        { userId: "vishal_chouhan07", comment: "Wow, amazing!" },
-                        { userId: "user_3", comment: "Beautiful view!" }
+                        { user_id: "vishal_chouhan07", comment: "Wow, amazing!" },
+                        { user_id: "user_3", comment: "Beautiful view!" }
                     ]
                 },
                 {
@@ -27,8 +27,8 @@ export const users =
                     caption: "Enjoying the sunset 🌅",
                     likes: 12,
                     comments: [
-                        { userId: "user_2", comment: "Wow, amazing!" },
-                        { userId: "user_3", comment: "Beautiful view!" }
+                        { user_id: "user_2", comment: "Wow, amazing!" },
+                        { user_id: "user_3", comment: "Beautiful view!" }
 
                     ]
                 }
