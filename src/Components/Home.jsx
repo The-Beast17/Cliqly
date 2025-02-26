@@ -72,7 +72,7 @@ const Home = () => {
   return (
     <>
       <div className="w-full h-screen bg-zinc-900 flex flex-col lg:flex-row">
-        <div className="w-full lg:w-[70%] h-full overflow-y-scroll pb-20  md:px-0 px-10 no-scrollbar">
+        <div className="w-full lg:w-[70%] h-full overflow-y-scroll pb-20  md:px-0 px-3 no-scrollbar">
           {/* Grid for posts */}
           <div className="">
             {posts.map((ele, i) => (

@@ -138,7 +138,7 @@ const Profile = () => {
                             <h1 className='font-bold text-xl'>{followers.length}</h1>
                             <h2 className='text-lg font-bold'>Followers</h2>
                         </div>
-                        <Link to="/following" className='text-white text-center hover:text-green-500'>
+                        <Link to={`/following/${userId}`} className='text-white text-center hover:text-green-500'>
                             <h1 className='font-bold text-xl'>{following.length}</h1>
                             <h2 className='text-lg font-bold'>Following</h2>
                         </Link>

@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { follow, unfollow } from './store/Reducers/AllusersSlice';
 
 const Following = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {userId} = useParams();
       const allUsers = useSelector((state) => state.allUsers.users);
       const loginUserId = useSelector((state) => state.allUsers.LoginUserId);
     
-      const data = allUsers.find((user) => user.user_id === loginUserId);
-      const {following} = data;
-      const followingData = allUsers.filter((user) => following.includes(user.user_id));
+      const loginUserData = allUsers.find((user) => user.user_id === loginUserId);
+      const {following} = loginUserData;
+      const data = allUsers.filter((user) => following.includes(user.user_id));
+
+      const [followingData, setfollowingData] = useState(data);
 
     const handleProfileClick = (userId) => {
         navigate(`/Profile/${userId}`);
@@ -45,12 +48,15 @@ const Following = () => {
                             </div>
                             <li className='text-white'>{user.user_id}</li>
                         </div>
+
+                        { userId === loginUserId &&
                             <button
                                 onClick={(e) => FollowingHandler(user.user_id)}
                                 className="bg-blue-500 text-white px-2 py-1 rounded"
                             >
                                 {following.includes(user.user_id) ? 'Unfollow' : 'Follow'}
                             </button>
+                        }
                         </div>
                     ))}
                 </ul>
